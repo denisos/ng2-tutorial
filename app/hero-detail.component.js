@@ -19,6 +19,16 @@ System.register(['angular2/core'], function(exports_1) {
             HeroDetailComponent = (function () {
                 function HeroDetailComponent() {
                 }
+                //	constructor(routeParams: RouteParams) {
+                //		let id = +routeParams.get('id');
+                //
+                //		console.log("in detail id is: ", id);
+                //	}
+                HeroDetailComponent.prototype.ngOnInit = function () {
+                    //	let id = this._routeParams.get('id');
+                    var id = 0;
+                    console.log("in detail id is: ", id);
+                };
                 HeroDetailComponent = __decorate([
                     core_1.Component({
                         selector: 'my-hero-detail',

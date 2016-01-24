@@ -1,4 +1,4 @@
-System.register(['angular2/core', './hero-detail.component', './hero.service'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', './hero-detail.component', './hero.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,12 +8,15 @@ System.register(['angular2/core', './hero-detail.component', './hero.service'], 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, hero_detail_component_1, hero_service_1;
+    var core_1, router_1, hero_detail_component_1, hero_service_1;
     var AppComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             },
             function (hero_detail_component_1_1) {
                 hero_detail_component_1 = hero_detail_component_1_1;
@@ -26,11 +29,18 @@ System.register(['angular2/core', './hero-detail.component', './hero.service'], 
             // <input [(ngModel)]="hero.name"  ...>   two way binding
             //
             AppComponent = (function () {
-                function AppComponent(_heroService) {
+                function AppComponent(_heroService, _router) {
                     this._heroService = _heroService;
+                    this._router = _router;
                     this.title = 'Tour of Heroes';
                 }
-                AppComponent.prototype.onSelect = function (hero) { this.selectedHero = hero; };
+                AppComponent.prototype.onSelect = function (hero) {
+                    // original way using binding 
+                    this.selectedHero = hero;
+                    console.log("nav to id: ", hero.id);
+                    // new: try with router
+                    this._router.navigate(['HeroDetail', { id: hero.id }]);
+                };
                 AppComponent.prototype.getHeroes = function () {
                     var _this = this;
                     this._heroService.getHeroes()
@@ -46,9 +56,12 @@ System.register(['angular2/core', './hero-detail.component', './hero.service'], 
                         styleUrls: ['app/app.component.css'],
                         encapsulation: core_1.ViewEncapsulation.Native,
                         providers: [hero_service_1.HeroService],
-                        directives: [hero_detail_component_1.HeroDetailComponent]
-                    }), 
-                    __metadata('design:paramtypes', [hero_service_1.HeroService])
+                        directives: [router_1.ROUTER_DIRECTIVES, hero_detail_component_1.HeroDetailComponent]
+                    }),
+                    router_1.RouteConfig([
+                        { path: '/hero/:id', name: 'HeroDetail', component: hero_detail_component_1.HeroDetailComponent }
+                    ]), 
+                    __metadata('design:paramtypes', [hero_service_1.HeroService, router_1.Router])
                 ], AppComponent);
                 return AppComponent;
             })();

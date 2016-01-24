@@ -1,4 +1,9 @@
 <h1>{{title}}</h1>
+
+<nav>
+	<a [routerLink]="['HeroDetail', {id:denis}]" >Hero Details</a>
+</nav>
+
 <h2>My Heroes</h2>
 <ul class="heroes">
   <li *ngFor="#hero of heroes" 
@@ -9,3 +14,5 @@
 </ul>
 
 <my-hero-detail [hero]="selectedHero"></my-hero-detail>
+
+<router-outlet></router-outlet>
